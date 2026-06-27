@@ -1,0 +1,4 @@
+com/events/repository/EventRepository.class
+com/events/model/Event.class
+com/events/EventsApplication.class
+com/events/controller/EventController.class
