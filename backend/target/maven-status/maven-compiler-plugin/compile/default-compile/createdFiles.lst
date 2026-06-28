@@ -1,4 +1,6 @@
 com/events/repository/EventRepository.class
 com/events/model/Event.class
 com/events/EventsApplication.class
+com/events/controller/HomeController.class
+com/events/service/ExcelImportService.class
 com/events/controller/EventController.class

@@ -1,20 +1,24 @@
 package com.events.controller;
 
+import com.events.model.Event;
 import com.events.repository.EventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/events")
 @CrossOrigin(origins = "*")
 public class EventController {
 
-    @Autowired
-    private EventRepository repo;
+    private final EventRepository repo;
 
-    @GetMapping("/events")
-    public List<?> getEvents() {
+    public EventController(EventRepository repo) {
+        this.repo = repo;
+    }
+
+    @GetMapping
+    public List<Event> getAllEvents() {
         return repo.findAll();
     }
 }
