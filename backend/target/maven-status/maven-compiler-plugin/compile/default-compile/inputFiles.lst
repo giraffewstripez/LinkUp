@@ -1,6 +1,5 @@
-/workspaces/LinkUp/backend/src/main/java/com/events/service/ExcelImportService.java
+/workspaces/LinkUp/backend/src/main/java/com/events/service/ImportEvents.java
 /workspaces/LinkUp/backend/src/main/java/com/events/controller/EventController.java
 /workspaces/LinkUp/backend/src/main/java/com/events/EventsApplication.java
-/workspaces/LinkUp/backend/src/main/java/com/events/controller/HomeController.java
 /workspaces/LinkUp/backend/src/main/java/com/events/repository/EventRepository.java
 /workspaces/LinkUp/backend/src/main/java/com/events/model/Event.java
