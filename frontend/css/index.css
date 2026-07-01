@@ -226,6 +226,19 @@
     background:red;
     border-radius:20px;
     flex-shrink:0;
-    flex:0 0 300px;
-    height:275px;
+    flex: 0 0 300px;
+    padding: 20px;
+    box-sizing: border-box;
 }
+
+.event-card h2{
+    background: transparent;
+    color: white;
+    font-size: 28px;
+    text-align: center;
+}
+
+
+
+
+

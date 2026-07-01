@@ -1,28 +1,31 @@
-fetch("http://localhost:8080/events")
-    .then(res => res.json())
-    .then(data => {
-        const container = document.getElementById("events");
-        container.innerHTML = "";
+const API_URL = "http://localhost:8080/events";
 
-        if (data.length === 0) {
-            container.innerHTML = "<p>No events found in the database yet.</p>";
-            return;
-        }
+const manhattanContainer = document.querySelector(".Manhattan");
+const brooklynContainer = document.querySelector(".Brooklyn");
 
-        data.forEach(event => {
-            const div = document.createElement("div");
-            div.className = "event";
-            div.innerHTML = `
-                <h3>${event.name}</h3>
-                <p>${event.eventDate || ""} | ${event.startTime || ""}</p>
-                <p>${event.borough || ""} - ${event.location || ""}</p>
-                <p>${event.description || ""}</p>
-                <p>Cost: $${event.cost}</p>
-            `;
-            container.appendChild(div);
-        });
-    })
-    .catch(error => {
-        document.getElementById("events").innerHTML = "Could not load events. Make sure the backend is running.";
-        console.error(error);
+fetch(API_URL)
+  .then(response => response.json())
+  .then(events => {
+    manhattanContainer.innerHTML = "";
+    brooklynContainer.innerHTML = "";
+
+    events.forEach(event => {
+      const card = document.createElement("div");
+      card.className = "event-card";
+
+      card.innerHTML = `
+        <h2>${event.name}</h2>
+      `;
+
+      if (event.borough === "Manhattan") {
+        manhattanContainer.appendChild(card);
+      }
+
+      if (event.borough === "Brooklyn") {
+        brooklynContainer.appendChild(card);
+      }
     });
+  })
+  .catch(error => {
+    console.error("Error loading events:", error);
+  });
