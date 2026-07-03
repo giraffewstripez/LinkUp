@@ -13,16 +13,14 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class EventController {
 
-    @Autowired
-    private EventRepository repo;
+    private final EventRepository repo;
+
+    public EventController(EventRepository repo) {
+        this.repo = repo;
+    }
 
     @GetMapping("/events")
     public List<Event> getEvents() {
         return repo.findAll();
-    }
-
-    @GetMapping("/")
-    public String home() {
-        return "LinkUp backend is running. Try /events";
     }
 }
