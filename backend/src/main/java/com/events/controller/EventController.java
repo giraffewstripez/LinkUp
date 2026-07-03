@@ -2,10 +2,7 @@ package com.events.controller;
 
 import com.events.model.Event;
 import com.events.repository.EventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,6 +14,11 @@ public class EventController {
 
     public EventController(EventRepository repo) {
         this.repo = repo;
+    }
+
+    @GetMapping("/")
+    public String home() {
+        return "LinkUp backend is running. Try /events";
     }
 
     @GetMapping("/events")
