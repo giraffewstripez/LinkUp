@@ -1,4 +1,4 @@
-const API_URL = "https://your-render-service-name.onrender.com/events";
+const API_URL = "https://linkup-7s4g.onrender.com/events";
 
 const manhattanContainer = document.querySelector(".Manhattan");
 const brooklynContainer = document.querySelector(".Brooklyn");
