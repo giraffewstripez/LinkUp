@@ -1,7 +1,5 @@
 const API_URL = "https://linkup-7s4g.onrender.com/events";
 
-const API_URL = "https://YOUR-RENDER-URL.onrender.com/events";
-
 const categoryColors = {
     "Queer Centered": "#87D46E",
     "POC Dominated": "#F56C9A",
