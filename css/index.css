@@ -160,66 +160,33 @@
 
 
 
-
-
-.Mhn-filter{
-    display: block;
-    background: red;
-    position: absolute;
-    margin-top: 1400px;
-    margin-left: 1350px;
-    width: 125px;
-    height: 50px;
-    font-size: 20px;
-}
-
-.Manhattan{
+.Manhattan,
+.Brooklyn {
     width: 1500px;
     height: 350px;
     background-color: black;
     position: absolute;
+
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 20px;
+    padding: 45px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+.Manhattan {
     margin-top: 1450px;
-    display: flex;
-    flex-wrap: nowrap;      
-    overflow-x: auto;        
-    overflow-y: hidden;
-    box-sizing: border-box;
 }
 
-
-
-.Bk-filter{
-    display: block;
-    background: red;
-    position: absolute;
-    margin-top: 1900px;
-    margin-left: 1350px;
-    width: 125px;
-    height: 50px;
-    font-size: 20px;
-}
-
-
-.Brooklyn{
-    width: 1500px;
-    height: 350px;
-    background-color: black;
-    position: absolute;
+.Brooklyn {
     margin-top: 1950px;
-    display: flex;
-    flex-wrap: nowrap;      
-    overflow-x: auto;       
-    overflow-y: hidden;
-    box-sizing: border-box;
+ padding:45px;
 }
 
-.Manhattan, .Brooklyn{
-    display:flex;
-    overflow-x:auto;
-    overflow-y:hidden;
-    gap:20px;
-    padding:45px;
-}
+
 .event-card{
     width:300px;
     min-width:300px;
