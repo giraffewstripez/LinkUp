@@ -222,3 +222,54 @@
     flex-shrink:0;
 }
 
+.event-date {
+    background: transparent;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.hidden {
+    display: none;
+}
+
+.popup-content {
+    width: 500px;
+    min-height: 300px;
+    background: #F8FADE;
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+    color: #17278F;
+}
+
+.popup-content * {
+    background: transparent;
+}
+
+#close-popup {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #17278F;
+    background: transparent;
+}
+
+#popup-url {
+    color: #F56C9A;
+    font-size: 20px;
+}
