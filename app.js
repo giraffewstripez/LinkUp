@@ -49,6 +49,8 @@ fetch(API_URL)
                 <h2>${event.name}</h2>
             `;
 
+            
+
             const borough = event.borough?.trim().toLowerCase();
 
             if (borough === "manhattan") {
@@ -61,3 +63,5 @@ fetch(API_URL)
     .catch(error => {
         console.error("Error loading events:", error);
     });
+
+    

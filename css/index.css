@@ -201,6 +201,7 @@
 }
 
 .event-card h2{
+    background: transparent;
     color: white;
     font-size: 28px;
     text-align: center;
@@ -215,11 +216,11 @@
 }
 
 .category-dot {
+    display: inline-block;
     width: 16px;
     height: 16px;
     border-radius: 50%;
     border: 2px solid white;
     flex-shrink: 0;
 }
-
 
