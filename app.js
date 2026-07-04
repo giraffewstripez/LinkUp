@@ -1,13 +1,11 @@
-const API_URL = "http://localhost:8080/events";
+const API_URL = "https://your-render-service-name.onrender.com/events";
+
+const manhattanContainer = document.querySelector(".Manhattan");
+const brooklynContainer = document.querySelector(".Brooklyn");
 
 fetch(API_URL)
   .then(response => response.json())
   .then(events => {
-    console.log(events);
-
-    const manhattanContainer = document.querySelector(".Manhattan");
-    const brooklynContainer = document.querySelector(".Brooklyn");
-
     manhattanContainer.innerHTML = "";
     brooklynContainer.innerHTML = "";
 
