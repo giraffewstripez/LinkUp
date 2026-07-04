@@ -1,27 +1,32 @@
 const API_URL = "https://linkup-7s4g.onrender.com/events";
 
 const categoryColors = {
-    "Queer Lead": "#87D46E",
+    "Queer Centered": "#87D46E",
     "POC Dominated": "#F56C9A",
     "Young & Turnt": "#F8FADE",
     "Family Oriented": "#17278F"
 };
 
 function makeCategoryDots(categoryString) {
-    if (!categoryString) return "";
+
+    if (!categoryString || categoryString.trim() === "") {
+        return "";
+    }
 
     return categoryString
         .split(",")
         .map(category => category.trim())
-        .filter(category => category !== "")
+        .filter(category => categoryColors.hasOwnProperty(category))
         .map(category => {
-            const color = categoryColors[category] || "#808080";
+            const color = categoryColors[category];
 
             return `
                 <span
                     class="category-dot"
-                    title="${category}"
-                    style="background-color:${color}">
+                    style="
+                        background-color:${color};
+                        border:2px solid ${color};
+                    ">
                 </span>
             `;
         })
@@ -32,12 +37,19 @@ const manhattanContainer = document.querySelector(".Manhattan");
 const brooklynContainer = document.querySelector(".Brooklyn");
 
 fetch(API_URL)
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to load events.");
+        }
+        return response.json();
+    })
     .then(events => {
+
         manhattanContainer.innerHTML = "";
         brooklynContainer.innerHTML = "";
 
         events.forEach(event => {
+
             const card = document.createElement("div");
             card.className = "event-card";
 
@@ -49,19 +61,18 @@ fetch(API_URL)
                 <h2>${event.name}</h2>
             `;
 
-            
-
             const borough = event.borough?.trim().toLowerCase();
 
             if (borough === "manhattan") {
                 manhattanContainer.appendChild(card);
-            } else if (borough === "brooklyn") {
+            }
+            else if (borough === "brooklyn") {
                 brooklynContainer.appendChild(card);
             }
+
         });
+
     })
     .catch(error => {
-        console.error("Error loading events:", error);
+        console.error(error);
     });
-
-    

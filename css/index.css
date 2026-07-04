@@ -207,20 +207,18 @@
     text-align: center;
 }
 
-
-.category-dots {
-    display: flex;
-    gap: 8px;
-    background: transparent;
-    margin-bottom: 15px;
+.category-dots{
+    display:flex;
+    gap:8px;
+    background:transparent;
+    margin-bottom:15px;
 }
 
-.category-dot {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 2px solid white;
-    flex-shrink: 0;
+.category-dot{
+    display:inline-block;
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    flex-shrink:0;
 }
 
