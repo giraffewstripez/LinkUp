@@ -145,6 +145,7 @@ function setupCircleFilters() {
                 document.querySelectorAll(".circle").forEach(c =>
                     c.classList.remove("active-filter")
                 );
+                
 
                 displayEvents(allEvents);
                 return;
