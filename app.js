@@ -1,101 +1,75 @@
 const API_URL = "https://linkup-7s4g.onrender.com/events";
 
-const categoryColors = {
-    "Queer Centered": "#87D46E",
-    "POC Dominated": "#F56C9A",
-    "Young & Turnt": "#F8FADE",
-    "Family Oriented": "#17278F"
+const manhattanContainer = document.querySelector(".Manhattan");
+const brooklynContainer = document.querySelector(".Brooklyn");
+
+let allEvents = [];
+
+const categoryFilters = {
+  circle1: "Queer Centered",
+  circle2: "POC Dominated",
+  circle3: "Young & Turnt",
+  circle4: "Family Oriented"
 };
 
-function makeCategoryDots(categoryString) {
-    if (!categoryString || categoryString.trim() === "") return "";
+fetch(API_URL)
+  .then(response => response.json())
+  .then(events => {
+    allEvents = events.sort((a, b) => {
+      return new Date(a.eventDate) - new Date(b.eventDate);
+    });
 
-    return categoryString
-        .split(",")
-        .map(category => category.trim())
-        .filter(category => categoryColors[category])
-        .map(category => {
-            const color = categoryColors[category];
-            return `
-                <span
-                    class="category-dot"
-                    style="background-color:${color}; border:2px solid ${color};">
-                </span>
-            `;
-        })
-        .join("");
-}
+    displayEvents(allEvents);
+    setupCircleFilters();
+  })
+  .catch(error => console.error("Error fetching events:", error));
 
-function openPopup(event) {
-    document.getElementById("popup-name").textContent = event.name || "";
-    document.getElementById("popup-description").textContent = event.description || "No description available.";
-    document.getElementById("popup-date").textContent = event.eventDate || "TBA";
-    document.getElementById("popup-time").textContent = `${event.startTime || "TBA"} - ${event.endTime || "TBA"}`;
-    document.getElementById("popup-location").textContent = event.location || "TBA";
-    document.getElementById("popup-cost").textContent = event.cost === 0 ? "Free" : `$${event.cost}`;
+function displayEvents(events) {
+  manhattanContainer.innerHTML = "<h2>Manhattan</h2>";
+  brooklynContainer.innerHTML = "<h2>Brooklyn</h2>";
 
-    const popupUrl = document.getElementById("popup-url");
+  events.forEach(event => {
+    const card = createEventCard(event);
 
-    if (event.url) {
-        popupUrl.href = event.url;
-        popupUrl.style.display = "inline-block";
-    } else {
-        popupUrl.style.display = "none";
+    if (event.borough === "Manhattan") {
+      manhattanContainer.appendChild(card);
+    } else if (event.borough === "Brooklyn") {
+      brooklynContainer.appendChild(card);
     }
-
-    document.getElementById("event-popup").classList.remove("hidden");
+  });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const manhattanContainer = document.querySelector(".Manhattan");
-    const brooklynContainer = document.querySelector(".Brooklyn");
+function createEventCard(event) {
+  const card = document.createElement("div");
+  card.classList.add("event-card");
 
-    const popup = document.getElementById("event-popup");
-    const closePopup = document.getElementById("close-popup");
+  card.innerHTML = `
+    <h3>${event.name}</h3>
+    <p>${event.eventDate}</p>
+  `;
 
-    closePopup.addEventListener("click", () => {
-        popup.classList.add("hidden");
+  card.addEventListener("click", () => {
+    openEventPopup(event);
+  });
+
+  return card;
+}
+
+function setupCircleFilters() {
+  Object.keys(categoryFilters).forEach(circleClass => {
+    const circle = document.querySelector(`.${circleClass}`);
+
+    if (!circle) return;
+
+    circle.addEventListener("click", () => {
+      const selectedCategory = categoryFilters[circleClass];
+
+      const filteredEvents = allEvents.filter(event => {
+        return event.category &&
+          event.category.toLowerCase().includes(selectedCategory.toLowerCase());
+      });
+
+      displayEvents(filteredEvents);
     });
-
-    popup.addEventListener("click", event => {
-        if (event.target === popup) {
-            popup.classList.add("hidden");
-        }
-    });
-
-    fetch(API_URL)
-        .then(response => response.json())
-        .then(events => {
-            manhattanContainer.innerHTML = "";
-            brooklynContainer.innerHTML = "";
-
-            events.forEach(event => {
-                const card = document.createElement("div");
-                card.className = "event-card";
-
-                card.innerHTML = `
-                    <div class="category-dots">
-                        ${makeCategoryDots(event.category)}
-                    </div>
-
-                    <h2>${event.name}</h2>
-                    <p class="event-date">${event.eventDate || ""}</p>
-                `;
-
-                card.addEventListener("click", () => {
-                    openPopup(event);
-                });
-
-                const borough = event.borough?.trim().toLowerCase();
-
-                if (borough === "manhattan") {
-                    manhattanContainer.appendChild(card);
-                } else if (borough === "brooklyn") {
-                    brooklynContainer.appendChild(card);
-                }
-            });
-        })
-        .catch(error => {
-            console.error("Error loading events:", error);
-        });
-});
+  });
+}

@@ -1,5 +1,5 @@
 *{
-    background-color: #407DA3;
+    background-color:  #748B91;
     font-family: "Oswald", sans-serif;
 }
 .header{
@@ -164,7 +164,7 @@
 .Brooklyn {
     width: 1500px;
     height: 350px;
-    background-color: black;
+    background-color: #445253;
     position: absolute;
 
     display: flex;
@@ -194,7 +194,7 @@
     min-width: 300px;
     height: 275px;
 
-    background: red;
+    background: #407DA3;
     border-radius: 20px;
     padding: 20px;
     box-sizing: border-box;
