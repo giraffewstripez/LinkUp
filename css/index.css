@@ -12,7 +12,7 @@
     overflow: -moz-hidden-unscrollable;
     background-color: white;
     margin-top: -35px;
-    z-index: 10;
+    z-index: 20;
 }
 
 .Logo {
@@ -36,14 +36,7 @@
 }
 
 .circle {
-    cursor: pointer;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-}
-
-.circle:hover,
-.circle.active-filter {
-    transform: scale(1.04);
-    border-color: #F8FADE;
+    cursor: default;
 }
 
 .circle1 {
@@ -135,6 +128,7 @@
     margin-top: 50px;
     font-size: 36px;
     color: #17278F;
+    background-color: transparent;
 }
 
 .cat1,
@@ -144,13 +138,13 @@
     display: inline-block;
     width: 310px;
     height: 275px;
-    background-color: red;
     border-radius: 50%;
     margin-top: 95px;
     margin-left: 45px;
     text-align: center;
     text-justify: distribute;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
 }
 
 .cat1 p,
@@ -182,18 +176,20 @@
     color: #87D46E;
 }
 
+.cat1.active-filter,
+.cat2.active-filter,
+.cat3.active-filter,
+.cat4.active-filter {
+    outline: 8px solid white;
+    transform: scale(1.04);
+}
+
 .borough-header {
     width: 1500px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     position: absolute;
     background: transparent;
-    margin-top: 1390px;
-}
-
-.brooklyn-header {
-    margin-top: 1890px;
 }
 
 .borough-header h1 {
@@ -201,6 +197,15 @@
     color: #F8FADE;
     font-size: 42px;
     margin: 0;
+    padding-left: 45px;
+}
+
+.manhattan-header {
+    margin-top: 1390px;
+}
+
+.brooklyn-header {
+    margin-top: 1890px;
 }
 
 .Manhattan,
@@ -209,11 +214,14 @@
     height: 350px;
     background-color: #445253;
     position: absolute;
+
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+
     overflow-x: scroll;
     overflow-y: hidden;
+
     gap: 20px;
     padding: 45px;
     box-sizing: border-box;
@@ -233,15 +241,13 @@
     width: 300px;
     min-width: 300px;
     height: 275px;
+
     background: #407DA3;
     border-radius: 20px;
     padding: 20px;
     box-sizing: border-box;
-    cursor: pointer;
-}
 
-.event-card:hover {
-    transform: translateY(-4px);
+    cursor: pointer;
 }
 
 .event-card h2 {
@@ -264,7 +270,6 @@
     height: 16px;
     border-radius: 50%;
     flex-shrink: 0;
-    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .event-date {
