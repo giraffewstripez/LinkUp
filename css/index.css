@@ -1,8 +1,9 @@
-*{
-    background-color:  #748B91;
+* {
+    background-color: #748B91;
     font-family: "Oswald", sans-serif;
 }
-.header{
+
+.header {
     display: block;
     width: 1500px;
     height: 100px;
@@ -11,8 +12,10 @@
     overflow: -moz-hidden-unscrollable;
     background-color: white;
     margin-top: -35px;
+    z-index: 10;
 }
-.Logo{
+
+.Logo {
     font-family: "Climate Crisis", sans-serif;
     background-color: transparent;
     padding-left: 40%;
@@ -21,9 +24,7 @@
     color: #407DA3;
 }
 
-
-
-.Intro{
+.Intro {
     display: block;
     width: 1500px;
     height: 750px;
@@ -31,9 +32,21 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    position: absolute
+    position: absolute;
 }
-.circle1{
+
+.circle {
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.circle:hover,
+.circle.active-filter {
+    transform: scale(1.04);
+    border-color: #F8FADE;
+}
+
+.circle1 {
     display: block;
     width: 400px;
     height: 350px;
@@ -48,7 +61,7 @@
     border: black 10px solid;
 }
 
-.circle2{
+.circle2 {
     display: block;
     width: 450px;
     height: 400px;
@@ -56,14 +69,14 @@
     position: absolute;
     margin-left: 125px;
     margin-top: 335px;
-     background-image: url("images/intro2.jpg");
+    background-image: url("images/intro2.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     border: black 10px solid;
 }
 
-.circle3{
+.circle3 {
     display: block;
     width: 400px;
     height: 350px;
@@ -71,14 +84,14 @@
     position: absolute;
     margin-left: 830px;
     margin-top: -25px;
-     background-image: url("images/intro3.jpg");
+    background-image: url("images/intro3.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     border: black 10px solid;
 }
 
-.circle4{
+.circle4 {
     display: block;
     width: 450px;
     height: 400px;
@@ -93,7 +106,7 @@
     border: black 10px solid;
 }
 
-.circle5{
+.circle5 {
     display: block;
     width: 400px;
     height: 350px;
@@ -108,8 +121,7 @@
     border: black 10px solid;
 }
 
-
-.cat-details{
+.cat-details {
     display: block;
     width: 1500px;
     height: 550px;
@@ -117,13 +129,18 @@
     position: absolute;
     margin-top: 780px;
 }
-.cat-details h1{
+
+.cat-details h1 {
     text-align: center;
     margin-top: 50px;
     font-size: 36px;
     color: #17278F;
 }
-.cat1, .cat2, .cat3, .cat4 {
+
+.cat1,
+.cat2,
+.cat3,
+.cat4 {
     display: inline-block;
     width: 310px;
     height: 275px;
@@ -135,30 +152,56 @@
     text-justify: distribute;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
-.cat1 p, .cat2 p, .cat3 p, .cat4 p{
+
+.cat1 p,
+.cat2 p,
+.cat3 p,
+.cat4 p {
     margin-top: 120px;
     background-color: transparent;
     font-size: 30px;
 }
-.cat1{
+
+.cat1 {
     background-color: #87D46E;
     color: #17278F;
 }
-.cat2{
+
+.cat2 {
     background-color: #F56C9A;
     color: #F8FADE;
 }
-.cat3{
+
+.cat3 {
     background-color: #F8FADE;
     color: #F56C9A;
 }
-.cat4{
+
+.cat4 {
     background-color: #17278F;
     color: #87D46E;
 }
 
+.borough-header {
+    width: 1500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    background: transparent;
+    margin-top: 1390px;
+}
 
+.brooklyn-header {
+    margin-top: 1890px;
+}
 
+.borough-header h1 {
+    background: transparent;
+    color: #F8FADE;
+    font-size: 42px;
+    margin: 0;
+}
 
 .Manhattan,
 .Brooklyn {
@@ -166,26 +209,23 @@
     height: 350px;
     background-color: #445253;
     position: absolute;
-
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-
     overflow-x: scroll;
     overflow-y: hidden;
-
     gap: 20px;
     padding: 45px;
     box-sizing: border-box;
     scroll-behavior: smooth;
 }
 
-.Manhattan{
-    margin-top:1455px;
+.Manhattan {
+    margin-top: 1455px;
 }
 
-.Brooklyn{
-    margin-top:1955px;
+.Brooklyn {
+    margin-top: 1955px;
 }
 
 .event-card {
@@ -193,33 +233,38 @@
     width: 300px;
     min-width: 300px;
     height: 275px;
-
     background: #407DA3;
     border-radius: 20px;
     padding: 20px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
-.event-card h2{
+.event-card:hover {
+    transform: translateY(-4px);
+}
+
+.event-card h2 {
     background: transparent;
     color: white;
     font-size: 28px;
     text-align: center;
 }
 
-.category-dots{
-    display:flex;
-    gap:8px;
-    background:transparent;
-    margin-bottom:15px;
+.category-dots {
+    display: flex;
+    gap: 8px;
+    background: transparent;
+    margin-bottom: 15px;
 }
 
-.category-dot{
-    display:inline-block;
-    width:16px;
-    height:16px;
-    border-radius:50%;
-    flex-shrink:0;
+.category-dot {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .event-date {
@@ -272,40 +317,4 @@
 #popup-url {
     color: #F56C9A;
     font-size: 20px;
-}
-
-.borough-header{
-    width:1500px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    position:absolute;
-    background:transparent;
-}
-
-.borough-header h1{
-    background:transparent;
-    color:#F8FADE;
-    font-size:42px;
-    margin:0;
-}
-
-.borough-header button{
-    width:125px;
-    height:50px;
-    font-size:20px;
-    background:#F56C9A;
-    color:white;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-
-.borough-header{
-    margin-top:1390px;
-}
-
-.brooklyn-header{
-    margin-top:1890px;
 }
