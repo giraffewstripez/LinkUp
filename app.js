@@ -4,14 +4,7 @@ const manhattanContainer = document.querySelector(".Manhattan");
 const brooklynContainer = document.querySelector(".Brooklyn");
 
 const popup = document.querySelector("#event-popup");
-const closePopupButton = document.querySelector("#close-popup");
-const popupName = document.querySelector("#popup-name");
-const popupDescription = document.querySelector("#popup-description");
-const popupDate = document.querySelector("#popup-date");
-const popupTime = document.querySelector("#popup-time");
-const popupLocation = document.querySelector("#popup-location");
-const popupCost = document.querySelector("#popup-cost");
-const popupUrl = document.querySelector("#popup-url");
+const closePopup = document.querySelector("#close-popup");
 
 let allEvents = [];
 let activeCategory = null;
@@ -23,7 +16,7 @@ const categoryFilters = {
     circle4: "Family Oriented"
 };
 
-const categoryDotColors = {
+const categoryColors = {
     "Queer Centered": "#87D46E",
     "POC Dominated": "#F56C9A",
     "Young & Turnt": "#F8FADE",
@@ -31,210 +24,122 @@ const categoryDotColors = {
 };
 
 fetch(API_URL)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Unable to retrieve events.");
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(events => {
         allEvents = sortEvents(events);
         displayEvents(allEvents);
         setupCircleFilters();
     })
-    .catch(error => console.error(error));
+    .catch(error => console.error("Error loading events:", error));
 
 function sortEvents(events) {
     return [...events].sort((a, b) => {
-        return getDateValue(a) - getDateValue(b);
+        return new Date(a.eventDate) - new Date(b.eventDate);
     });
-}
-
-function getDateValue(event) {
-    const date = event.eventDate || event.event_date || event.Event_date || "";
-    const time = event.startTime || event.start_time || event.Start_time || "00:00";
-
-    return new Date(`${date}T${time}`).getTime();
 }
 
 function displayEvents(events) {
-
-    clearCards();
-
-    events.forEach(event => {
-
-        const card = createEventCard(event);
-
-        const borough = (event.borough || "").toLowerCase();
-
-        if (borough === "manhattan") {
-            manhattanContainer.appendChild(card);
-        }
-
-        if (borough === "brooklyn") {
-            brooklynContainer.appendChild(card);
-        }
-
-    });
-
-}
-
-function clearCards() {
-
     manhattanContainer.querySelectorAll(".event-card").forEach(card => card.remove());
     brooklynContainer.querySelectorAll(".event-card").forEach(card => card.remove());
 
+    events.forEach(event => {
+        const card = createEventCard(event);
+        const borough = String(event.borough || "").toLowerCase();
+
+        if (borough === "manhattan") {
+            manhattanContainer.appendChild(card);
+        } else if (borough === "brooklyn") {
+            brooklynContainer.appendChild(card);
+        }
+    });
 }
 
 function createEventCard(event) {
-
     const card = document.createElement("div");
-    card.classList.add("event-card");
-
-    const dots = createCategoryDots(event.category || "");
+    card.className = "event-card";
 
     card.innerHTML = `
         <div class="category-dots">
-            ${dots}
+            ${getCategoryDots(event.category)}
         </div>
-
-        <h2>${event.name}</h2>
-
-        <p class="event-date">
-            ${formatDate(event.eventDate || event.event_date || event.Event_date)}
-        </p>
+        <h2>${event.name || "Untitled Event"}</h2>
+        <p class="event-date">${formatDate(event.eventDate)}</p>
     `;
 
-    card.addEventListener("click", () => {
-        openPopup(event);
-    });
+    card.addEventListener("click", () => openPopup(event));
 
     return card;
-
 }
 
-function createCategoryDots(categoryText) {
-
-    return Object.entries(categoryDotColors)
+function getCategoryDots(categoryText = "") {
+    return Object.entries(categoryColors)
         .filter(([category]) =>
             categoryText.toLowerCase().includes(category.toLowerCase())
         )
         .map(([, color]) =>
-            `<span class="category-dot" style="background-color:${color};"></span>`
+            `<span class="category-dot" style="background-color: ${color};"></span>`
         )
         .join("");
-
 }
 
 function setupCircleFilters() {
-
     Object.entries(categoryFilters).forEach(([circleClass, category]) => {
-
         const circle = document.querySelector(`.${circleClass}`);
-
         if (!circle) return;
 
         circle.style.cursor = "pointer";
 
         circle.addEventListener("click", () => {
-
             if (activeCategory === category) {
-
                 activeCategory = null;
-
-                document.querySelectorAll(".circle").forEach(c =>
-                    c.classList.remove("active-filter")
-                );
-                
-
                 displayEvents(allEvents);
                 return;
             }
 
             activeCategory = category;
 
-            document.querySelectorAll(".circle").forEach(c =>
-                c.classList.remove("active-filter")
-            );
-
-            circle.classList.add("active-filter");
-
-            const filtered = allEvents.filter(event => {
-
-                if (!event.category) return false;
-
-                return event.category
+            const filteredEvents = allEvents.filter(event => {
+                return String(event.category || "")
                     .toLowerCase()
                     .includes(category.toLowerCase());
-
             });
 
-            displayEvents(filtered);
-
+            displayEvents(filteredEvents);
         });
-
     });
-
 }
 
 function openPopup(event) {
+    document.querySelector("#popup-name").textContent = event.name || "Untitled Event";
+    document.querySelector("#popup-description").textContent = event.description || "No description available.";
+    document.querySelector("#popup-date").textContent = formatDate(event.eventDate);
+    document.querySelector("#popup-time").textContent = `${formatTime(event.startTime)} - ${formatTime(event.endTime)}`;
+    document.querySelector("#popup-location").textContent = event.location || "Location unavailable";
+    document.querySelector("#popup-cost").textContent = formatCost(event.cost);
 
-    popupName.textContent = event.name;
-
-    popupDescription.textContent =
-        event.description || "No description available.";
-
-    popupDate.textContent = formatDate(
-        event.eventDate || event.event_date || event.Event_date
-    );
-
-    const start = formatTime(
-        event.startTime || event.start_time || event.Start_time
-    );
-
-    const end = formatTime(
-        event.endTime || event.end_time || event.End_time
-    );
-
-    popupTime.textContent =
-        end !== "" ? `${start} - ${end}` : start;
-
-    popupLocation.textContent =
-        event.location || "Location unavailable";
-
-    popupCost.textContent = formatCost(event.cost);
+    const popupUrl = document.querySelector("#popup-url");
 
     if (event.url) {
-
         popupUrl.href = event.url;
         popupUrl.style.display = "inline-block";
-
     } else {
-
         popupUrl.style.display = "none";
-
     }
 
     popup.classList.remove("hidden");
-
 }
 
-closePopupButton.addEventListener("click", () => {
+closePopup.addEventListener("click", () => {
     popup.classList.add("hidden");
 });
 
-popup.addEventListener("click", e => {
-
-    if (e.target === popup) {
-
+popup.addEventListener("click", event => {
+    if (event.target === popup) {
         popup.classList.add("hidden");
-
     }
-
 });
 
 function formatDate(dateString) {
-
     if (!dateString) return "Date unavailable";
 
     const date = new Date(`${dateString}T00:00:00`);
@@ -246,46 +151,33 @@ function formatDate(dateString) {
         day: "numeric",
         year: "numeric"
     });
-
 }
 
 function formatTime(timeString) {
-
     if (!timeString) return "";
 
     const pieces = String(timeString).split(":");
 
     if (pieces.length < 2) return timeString;
 
-    const d = new Date();
+    const date = new Date();
+    date.setHours(Number(pieces[0]));
+    date.setMinutes(Number(pieces[1]));
 
-    d.setHours(Number(pieces[0]));
-    d.setMinutes(Number(pieces[1]));
-
-    return d.toLocaleTimeString([], {
+    return date.toLocaleTimeString("en-US", {
         hour: "numeric",
         minute: "2-digit"
     });
-
 }
 
 function formatCost(cost) {
-
     if (cost === null || cost === undefined || cost === "") {
         return "Cost unavailable";
     }
 
-    const value = Number(cost);
-
-    if (!isNaN(value)) {
-
-        if (value === 0) {
-            return "Free";
-        }
-
-        return `$${value.toFixed(2)}`;
+    if (Number(cost) === 0) {
+        return "Free";
     }
 
-    return cost;
-
+    return `$${Number(cost).toFixed(2)}`;
 }
